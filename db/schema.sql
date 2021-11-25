@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS stylists_db;
+
+CREATE DATABASE stylists_db;
