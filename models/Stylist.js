@@ -13,7 +13,7 @@ Stylist.init(
         },
         first_name: {
             type: DataTypes.STRING,
-            allownull: FALSE
+            allownull: false
         },
         last_name: {
             type: DataTypes.STRING,

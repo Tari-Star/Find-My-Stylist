@@ -1,12 +1,11 @@
-const sequelize = require('../config/connection');
 const { City } = require('../models');
 
 const citydata = [
     {name: 'Orlando'},
     {name: 'Tampa'},
-    {name: 'West Palm Beach'},
+    {name: 'West Palm Beach'}
 ]
 
-const seedCities = () => City.bulkCreate(citydata, {individualHooks: true});
+const seedCities = () => City.bulkCreate(citydata);
 
 module.exports = seedCities;

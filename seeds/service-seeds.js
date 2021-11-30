@@ -1,4 +1,3 @@
-const sequelize = require('../config/connection');
 const { Service } = require('../models');
 
 const servicedata = [
@@ -8,6 +7,6 @@ const servicedata = [
     {name: 'formal'}
 ]
 
-const seedServices = () => Service.bulkCreate(servicedata, {individualHooks: true});
+const seedServices = () => Service.bulkCreate(servicedata);
 
 module.exports = seedServices;
