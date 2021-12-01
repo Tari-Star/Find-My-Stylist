@@ -20,21 +20,6 @@ router.get('/:id', (req, res) => {
       where: {
         id: req.params.id
       }
-    //,
-    //include: [
-    //  {
-    //    model: Post,
-    //    attributes: ['id', 'name', 'link_url'],
-    //  },
-    //  {
-    //    model: Service,
-    //    attributes: ['type'],
-    //  },
-    //  {
-    //    model: City,
-    //    attributes: ['name'],
-    //  }
-    //]
     })
       .then(dbUserData => {
         if (!dbUserData) {

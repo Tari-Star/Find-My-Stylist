@@ -34,7 +34,7 @@
 * Repository link: [https://github.com/Tari-Star/Find-My-Stylist.git](https://github.com/Tari-Star/Find-My-Stylist.git)
 
 
-## Technology ( Links ):
+## Technology
 
 **1. [Node.js ](https://nodejs.org/en/):**
 
