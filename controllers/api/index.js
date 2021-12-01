@@ -8,6 +8,6 @@ const stylistRoutes = require('./stylist-routes.js');
 router.use('/users', userRoutes);
 router.use('/cities', cityRoutes);
 router.use('/services', serviceRoutes);
-router.use('/stylists', postRoutes);
+router.use('/stylists', stylistRoutes);
 
 module.exports = router;
