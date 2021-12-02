@@ -3,23 +3,20 @@ const Stylist = require('./Stylist');
 const Service = require('./Service');
 const City = require('./City');
 
-
-
-
 Stylist.belongsTo(City, {
     foreignKey: 'city_id'
 });
 
 City.hasMany(Stylist, {
-    foreignKey: 'city_id'
-})
-
-Service.belongsToMany(Stylist, {
     foreignKey: 'id'
 })
 
-Stylist.hasMany(Service, {
+Stylist.belongsTo(Service, {
     foreignKey: 'id'
+})
+
+Service.hasMany(Stylist, {
+    foreignKey: 'service_id'
 })
 
 
