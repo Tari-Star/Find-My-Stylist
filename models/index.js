@@ -1,5 +1,5 @@
-const User = require('./User');
 const Stylist = require('./Stylist');
+const Post = require('./Post');
 const Service = require('./Service');
 const City = require('./City');
 
@@ -20,4 +20,4 @@ Service.hasMany(Stylist, {
 })
 
 
-module.exports = { User, Stylist, City, Service};
+module.exports = { Stylist, Post, City, Service};
