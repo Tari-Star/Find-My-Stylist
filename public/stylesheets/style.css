@@ -77,7 +77,7 @@ form label {
 
 header {
   padding: 60px 50px;
-background-image: url('/public/stylesheets/images/2.jpg');
+background-image: url('../stylesheets/images/2.jpg');
 background-position: 60%;
 background-attachment:fixed;
 background-size: cover;
@@ -102,7 +102,7 @@ section {
   padding: 600px;
 }
 .hero {
-  background-image: url('/public/stylesheets/images/1.jpg\ 17-30-24-600.jpg');
+  background-image: url('../stylesheets/images/1.jpg\ 17-30-24-600.jpg');
   background-position: 80%;
   background-size:contain;
   background-attachment: fixed;
