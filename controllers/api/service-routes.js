@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Service } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // get all services
 router.get('/', (req, res) => {
@@ -32,9 +33,9 @@ router.get('/:id', (req, res) => {
   });
 
 // add service
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     Service.create({
-      name: req.body.name
+      title: req.body.title
     })
       .then(dbServiceData => res.json(dbServiceData))
       .catch(err => {
@@ -44,7 +45,7 @@ router.post('/', (req, res) => {
   });
 
 // update service info
-router.put('/:id', (req, res) => {  
+router.put('/:id', withAuth, (req, res) => {  
     // pass in req.body instead to only update what's passed through
     Service.update(req.body, {
       where: {
@@ -65,7 +66,7 @@ router.put('/:id', (req, res) => {
   });
   
 // delete a service
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Service.destroy({
       where: {
         id: req.params.id
