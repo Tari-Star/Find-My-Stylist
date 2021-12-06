@@ -22,11 +22,11 @@
 
 ## Demo:
 
-![demo](./images/)
+![demo](./public/stylesheets/images/project2.png)
 
 ***HEROKU***
 
-* Deployed link:  []()
+* Deployed link:  [https://find-my-stylist.herokuapp.com/](https://find-my-stylist.herokuapp.com/)
 
 
 ***GITHUB***
