@@ -1,6 +1,8 @@
 const router = require('express').Router();
-
 const userRoutes = require('./user-routes.js');
+=======
+const stylistRoutes = require('./stylist-routes.js');
+>>>>>>> develop
 const cityRoutes = require('./city-routes');
 const serviceRoutes = require('./service-routes.js')
 const stylistRoutes = require('./user-routes.js');
