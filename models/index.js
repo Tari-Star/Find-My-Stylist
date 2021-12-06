@@ -1,7 +1,7 @@
+const User = require('./User');
 const Stylist = require('./Stylist');
-const Post = require('./Post');
 const Service = require('./Service');
-const City = require('./City');
+const City = require('./City')
 
 Stylist.belongsTo(City, {
     foreignKey: 'city_id'
@@ -20,4 +20,4 @@ Service.hasMany(Stylist, {
 })
 
 
-module.exports = { Stylist, Post, City, Service};
+module.exports = { User, Stylist, City, Service};

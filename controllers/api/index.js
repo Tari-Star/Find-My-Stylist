@@ -1,13 +1,13 @@
 const router = require('express').Router();
 
-const stylistRoutes = require('./stulist-routes.js');
+const userRoutes = require('./user-routes.js');
 const cityRoutes = require('./city-routes');
 const serviceRoutes = require('./service-routes.js')
-const postRoutes = require('./post-routes.js');
+const stylistRoutes = require('./user-routes.js');
 
-router.use('/stylists', stylistRoutes);
+router.use('/users', userRoutes);
 router.use('/cities', cityRoutes);
 router.use('/services', serviceRoutes);
-router.use('/posts', postRoutes);
+router.use('/stylists', stylistRoutes);
 
 module.exports = router;
