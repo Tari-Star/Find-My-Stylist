@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const stylistRoutes = require('./stulist-routes.js');
+const stylistRoutes = require('./stylist-routes.js');
 const cityRoutes = require('./city-routes');
 const serviceRoutes = require('./service-routes.js')
 const postRoutes = require('./post-routes.js');

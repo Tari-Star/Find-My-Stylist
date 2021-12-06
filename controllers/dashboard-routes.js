@@ -1,8 +1,4 @@
-const router = require('express').Router();
-const sequelize = require('../config/connection');
 
-const {Stylist, Service, City} = require('../models');
-const withAuth = require('../utils/auth');
 
 // A route to render the stylist dashboard page , only for logged in stylist
 const router = require('express').Router();
