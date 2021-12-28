@@ -1,33 +1,38 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Stylist, City, Service } = require('../models');
+const { Post, User, Stylist, Service, City, Comment } = require('../models');
 
 //Render the home page
 router.get('/', (req, res) => {
-    Stylist.findAll({
-        attributes: [
-            'id',
-           'username',
-            'service_id',
-            'city_id',
-            'created_at',
-          ],
-          order: [[ 'created_at', 'DESC' ]],
-          include: [
-            {
-                model: City,
-                attributes: ['name']
-            },
-            {
-                model: Service,
-                attributes: ['title']
-            }
-          ] 
+    Post.findAll({
+      attributes: ["id", "post_text", "title", "created_at"],
+      include: [
+        {
+          model: Comment,
+          attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
+        },
+        {
+          model: Stylist,
+          attributes: ["username", "service_id", "city_id"],
+          include: {
+            model: Service,
+            attributes: ["title"],
+          },
+          include: {
+            model: City,
+            attributes: ["name"],
+          },
+        },
+      ],
     })
-    .then(dbStylistData => {
-        const stylists = dbStylistData.map(stylist => stylist.get({ plain: true }));
+    .then(dbPostData => {
+        const posts = dbPostData.map(post => post.get({ plain: true }));
         res.render('homepage', {
-            stylists
+            posts
         });
     })
     .catch(err => {
@@ -36,38 +41,44 @@ router.get('/', (req, res) => {
     });
 });
 
-// Render single stylist page
-router.get('/stylist/:id', (req, res) => {
-    Stylist.findOne({
+// Render single post page
+router.get('/post/:id', (req, res) => {
+    Post.findOne({
         where: {
             id: req.params.id
         },
-        attributes: [
-          'id',
-          'username',
-          'service_id',
-          'city_id',
-          'created_at',
-        ],
+        attributes: ["id", "post_text", "title", "created_at"],
         include: [
           {
-              model: City,
-              attributes: ['name']
+            model: Comment,
+            attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+            include: {
+              model: User,
+              attributes: ["username"],
+            },
           },
           {
+            model: Stylist,
+            attributes: ["username", "service_id", "city_id"],
+            include: {
               model: Service,
-              attributes: ['title']
-          }
-        ] 
+              attributes: ["title"],
+            },
+            include: {
+              model: City,
+              attributes: ["name"],
+            },
+          },
+        ],
     })
-    .then(dbStylistData => {
-        if (!dbStylistData) {
-            res.status(404).json({ message: 'No stylist found with this id' });
+    .then(dbPostData => {
+        if (!dbPostData) {
+            res.status(404).json({ message: 'No post found with this id' });
             return;
           }
-          const stylist = dbStylistData.get({ plain: true });
-          res.render('single-stylist', {
-            stylist
+          const post = dbPostData.get({ plain: true });
+          res.render('single-post', {
+            post
           });
     })
     .catch(err => {
