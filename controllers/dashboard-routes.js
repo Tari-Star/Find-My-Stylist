@@ -2,24 +2,20 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 
-const {Stylist, Service, City, Post} = require('../models');
+const {Stylist, Service, City, User} = require('../models');
 const withAuth = require('../utils/auth');
 
 // A route to render the stylist dashboard page , only for logged in stylist
 router.get('/', withAuth, (req, res) => {
-  // Findl All Posts from database
-  Post.findAll({
+  // Findl All Stylists from database
+  Stylist.findAll({
       where: {
           stylist_id: req.session.stylist_id
       },
       attributes: [
-        "id", "post_text","service_id", "city_id", "link_url", "created_at"
+        "id","service_id", "city_id", "link_url", "created_at"
       ],
       include: [
-          {
-              model: Stylist,
-              attributes: ['username']
-          },
           {
             model: City,
             attributes: ["name"],
