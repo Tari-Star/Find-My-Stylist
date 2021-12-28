@@ -1,14 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-const bcrypt = require('bcrypt');
-
-class Stylist extends Model {
-
-    checkPassword(loginPw) {
-        return bcrypt.compareSync(loginPw, this.password);
-    }
-}
+class Stylist extends Model {}
 
 Stylist.init(
     {
@@ -18,42 +11,42 @@ Stylist.init(
             primaryKey: true,
             autoIncrement: true
         },
-        username:{
+        first_name: {
             type: DataTypes.STRING,
-            allownull:false
+            allownull: false
         },
-        email:{
+        last_name: {
             type: DataTypes.STRING,
-            allownull: false,
-            unique: true,
-            validate: {
-                isEmail: true
+            allownull: false
+        },
+        service_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'service',
+                key: 'id'
             }
         },
-        password:{
+        city_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'city',
+                key: 'id'
+            }
+        },
+        link_url: {
             type: DataTypes.STRING,
             allownull: false,
             validate: {
-                len: [8]
+                isURL: true
             }
         }
-        
     },
     {
-        hooks: {
-            async beforeCreate(newUserData) {
-                newUserData.password = await bcrypt.hash(newUserData.password, 10);
-                return newUserData;
-              },
-              async beforeUpdate(updatedUserData) {
-                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-                return updatedUserData;
-              }
-        },
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'user'
+        modelName: 'stylist'
     }
 );
+
 module.exports = Stylist;

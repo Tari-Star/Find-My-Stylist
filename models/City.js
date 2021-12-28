@@ -24,4 +24,5 @@ City.init (
     }
 );
 
+
 module.exports = City;

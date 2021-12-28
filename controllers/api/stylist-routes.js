@@ -1,15 +1,27 @@
 const router = require('express').Router();
-const { Stylist, Post, Service, City } = require('../../models');
+const { Stylist, Service, City, User } = require('../../models');
 
-const session = require('express-session');
-const withAuth = require('../../utils/auth');
-
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
-// get all Stylists
+// get all stylists
 router.get('/', (req, res) => {
+    console.log('======================');
     Stylist.findAll({
-      attributes: { exclude: ['password'] }
+      attributes: [
+        'id',
+        'first_name',
+        'last_name',
+        'link_url'
+      ],
+      order: [['created_at', 'DESC']],
+      include: [
+        {
+          model: City,
+          attributes: ['id']
+        },
+        {
+          model: Service,
+          attributes: ['id']
+        }
+      ]
     })
       .then(dbStylistData => res.json(dbStylistData))
       .catch(err => {
@@ -18,32 +30,16 @@ router.get('/', (req, res) => {
       });
   });
 
-// get single Stylist
+// get single stylist
 router.get('/:id', (req, res) => {
     Stylist.findOne({
-      attributes: { exclude: ['password'] },
       where: {
         id: req.params.id
-      },
-      include: [
-        {
-          model: Post,
-          attributes: ['id', 'name', 'post_text', 'sevice_id', 'city_id', 'link_url']
-        },
-        {
-          model: Service,
-          attributes: ['id', 'title']
-        },
-        {
-          model: City,
-          attributes: ['id', 'name']
-        }
-
-      ]
+      }
     })
       .then(dbStylistData => {
         if (!dbStylistData) {
-          res.status(404).json({ message: 'No Stylist found with this id' });
+          res.status(404).json({ message: 'No stylist found with this id' });
           return;
         }
         res.json(dbStylistData);
@@ -54,12 +50,14 @@ router.get('/:id', (req, res) => {
       });
   });
 
-// add Stylist
-router.post('/', withAuth, (req, res) => {
+// add stylist
+router.post('/', (req, res) => {
     Stylist.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        city_id: req.body.city_id,
+        service_id: req.body.service_id,
+        link_url: req.body.link_url
     })
       .then(dbStylistData => res.json(dbStylistData))
       .catch(err => {
@@ -68,45 +66,45 @@ router.post('/', withAuth, (req, res) => {
       });
   });
 
- // update Stylist info
- router.put('/:id', withAuth, (req, res) => {  
-     // pass in req.body instead to only update what's passed through
-     Stylist.update(req.body, {
-       individualHooks: true,
-       where: {
-         id: req.params.id
-       }
-     })
-       .then(dbStylistData => {
-         if (!dbStylistData[0]) {
-           res.status(404).json({ message: 'No Stylist found with this id' });
-           return;
-         }
-         res.json(dbStylistData);
-       })
-       .catch(err => {
-         console.log(err);
-         res.status(500).json(err);
-       });
-   });
- // delete a Stylist
- router.delete('/:id', withAuth, (req, res) => {
-     Stylist.destroy({
-       where: {
-         id: req.params.id
-       }
-     })
-       .then(dbStylistData => {
-         if (!dbStylistData) {
-           res.status(404).json({ message: 'No Stylist found with this id' });
-           return;
-         }
-         res.json(dbStylistData);
-       })
-       .catch(err => {
-         console.log(err);
-         res.status(500).json(err);
-       });
-   });
+// update stylist info
+router.put('/:id', (req, res) => {  
+    // pass in req.body instead to only update what's passed through
+    Stylist.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    })
+      .then(dbStylistData => {
+        if (!dbStylistData[0]) {
+          res.status(404).json({ message: 'No stylist found with this id' });
+          return;
+        }
+        res.json(dbStylistData);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+  
+// delete a stylist
+router.delete('/:id', (req, res) => {
+    Stylist.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+      .then(dbStylistData => {
+        if (!dbStylistData) {
+          res.status(404).json({ message: 'No stylist found with this id' });
+          return;
+        }
+        res.json(dbStylistData);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
 
-module.exports = router;
+  module.exports = router;
