@@ -25,6 +25,10 @@ Stylist.init(
       type: DataTypes.STRING,
       allownull: false,
     },
+    username:{
+      type: DataTypes.STRING,
+      allownull:false
+  },
     service_id: {
       type: DataTypes.INTEGER,
       references: {
