@@ -2,33 +2,34 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 
-const {Stylist, Service, City, User} = require('../models');
+const {Stylist, Service, City} = require('../models');
 const withAuth = require('../utils/auth');
 
 // A route to render the stylist dashboard page , only for logged in stylist
-router.get('/', withAuth, (req, res) => {
-  // Findl All Stylists from database
+router.get('/', (req, res) => {
   Stylist.findAll({
-      where: {
-          stylist_id: req.session.stylist_id
-      },
       attributes: [
-        "id","service_id", "city_id", "link_url", "created_at"
-      ],
-      include: [
+          'id',
+         'username',
+          'service_id',
+          'city_id',
+          'created_at',
+        ],
+        order: [[ 'created_at', 'DESC' ]],
+        include: [
           {
-            model: City,
-            attributes: ["name"],
+              model: City,
+              attributes: ['id', 'name']
           },
           {
-            model: Service,
-            attributes: ["title"],
-          },
-      ]
+              model: Service,
+              attributes: ['title']
+          }
+        ] 
   })
-  .then(dbPostData => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
-      res.render('dashboard', { posts, loggedIn: true });
+  .then(dbStylistData => {
+      const stylists = dbStylistData.map(stylist => stylist.get({ plain: true }));
+      res.render('dashboard', {stylists, loggedIn: true});
   })
   .catch(err => {
       console.log(err);
@@ -36,40 +37,42 @@ router.get('/', withAuth, (req, res) => {
   });
 });
 
-// Edit post
-router.get('/edit/:id', withAuth, (req, res) => {
-  Post.findOne({
-    where: {
-      stylist_id: req.session.stylist_id
-  },
-  attributes: [
-    "id", "post_text","service_id", "city_id", "link_url", "created_at"
-  ],
-  include: [
-      {
-          model: Stylist,
-          attributes: ['username']
+// edit single stylist page
+router.get('/edit/:id', withAuth,(req, res) => {
+  Stylist.findOne({
+      where: {
+          id: req.params.id
       },
-      {
-        model: City,
-        attributes: ["name"],
-      },
-      {
-        model: Service,
-        attributes: ["title"],
-      },
-  ]
+      attributes: [
+        'id',
+        'username',
+        'service_id',
+        'city_id',
+        'created_at',
+      ],
+      order: [[ 'created_at', 'DESC' ]],
+      include: [
+        {
+            model: City,
+            attributes: ['name']
+        },
+        {
+            model: Service,
+            attributes: ['title']
+        }
+      ] 
   })
-    .then(dbPostData => {
-      if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
-        return;
-      }
-
-      const post = dbPostData.get({ plain: true });
-      res.render('edit-post', { post, loggedIn: true });
-    })
-    .catch(err => {
+  .then(dbStylistData => {
+      if (!dbStylistData) {
+          res.status(404).json({ message: 'No stylist found with this id' });
+          return;
+        }
+        const stylist = dbStylistData.get({ plain: true });
+        res.render('single-stylist', {
+          stylist
+        });
+  })
+  .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });

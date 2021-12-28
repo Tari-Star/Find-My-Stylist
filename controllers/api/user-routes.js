@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
 
   
 // login
-router.post('/login', (req, res) => {
+router.post('/users-login', (req, res) => {
   // Find user if exist, by email
   User.findOne({
     where: {
@@ -94,7 +94,7 @@ router.post('/login', (req, res) => {
 });
 
 // Logout
-router.post('/logout', withAuth, (req, res) => {
+router.post('/users-logout', withAuth, (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();

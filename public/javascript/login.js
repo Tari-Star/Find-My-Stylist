@@ -1,4 +1,4 @@
-async function loginFormHandler(event) {
+async function usersLoginFormHandler(event) {
     event.preventDefault();
   
     const email = document.querySelector("#email-login").value.trim();
@@ -15,7 +15,7 @@ async function loginFormHandler(event) {
       });
   
       if (response.ok) {
-        document.location.replace("/dashboard/");
+        document.location.replace("/stylist-signup/");
       } else {
         let result = await response.json();
         alert(result.message);
@@ -26,4 +26,4 @@ async function loginFormHandler(event) {
   
   document
     .querySelector(".login-form")
-    .addEventListener("submit", loginFormHandler);
+    .addEventListener("submit", usersLoginFormHandler);

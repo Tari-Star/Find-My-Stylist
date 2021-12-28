@@ -1,23 +1,99 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
+const { Stylist, City, Service } = require('../models');
 
-
+//Render the home page
 router.get('/', (req, res) => {
-  res.render('homepage', {
-    id: 1,
-    first_name: 'Darla',
-    last_name: 'Beauty',
-    service_id: 1,
-    city_id: 1,
-    link_url:'https://handlebars.js.com/guide/',
-    user: {
-      username: 'test_user'
-    }
-  });
+    Stylist.findAll({
+        attributes: [
+            'id',
+           'username',
+            'service_id',
+            'city_id',
+            'created_at',
+          ],
+          order: [[ 'created_at', 'DESC' ]],
+          include: [
+            {
+                model: City,
+                attributes: ['name']
+            },
+            {
+                model: Service,
+                attributes: ['title']
+            }
+          ] 
+    })
+    .then(dbStylistData => {
+        const stylists = dbStylistData.map(stylist => stylist.get({ plain: true }));
+        res.render('homepage', {
+            stylists
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
 });
 
+// Render single stylist page
+router.get('/stylist/:id', (req, res) => {
+    Stylist.findOne({
+        where: {
+            id: req.params.id
+        },
+        attributes: [
+          'id',
+          'username',
+          'service_id',
+          'city_id',
+          'created_at',
+        ],
+        include: [
+          {
+              model: City,
+              attributes: ['name']
+          },
+          {
+              model: Service,
+              attributes: ['title']
+          }
+        ] 
+    })
+    .then(dbStylistData => {
+        if (!dbStylistData) {
+            res.status(404).json({ message: 'No stylist found with this id' });
+            return;
+          }
+          const stylist = dbStylistData.get({ plain: true });
+          res.render('single-stylist', {
+            stylist
+          });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+});
+
+// Render login page. If user logged in, redirect to the home page
 router.get('/login', (req, res) => {
-  res.render('login');
-});
+    if (req.session.loggedIn) {
+      res.redirect('/');
+      return;
+    }
+  
+    res.render('login');
+  });
 
-module.exports = router;
+  // Render the sign up page.  If the user is logged in, redirect to the home page.
+router.get('/signup', (req, res) => {
+    if (req.session.loggedIn) {
+      res.redirect('/');
+      return;
+    }
+  
+    res.render('signup');
+  });
+  
+  module.exports = router;
