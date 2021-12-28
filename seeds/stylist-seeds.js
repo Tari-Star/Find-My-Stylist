@@ -2,39 +2,44 @@ const { Stylist } = require('../models');
 
 const stylistdata = [
   {
-    first_name: 'First Name 1',
-    last_name: 'Last Name 1',
-    service_id: 1,
-    city_id: 1,
-    link_url: 'https://www.vagaro.com/enhancebraidingsalon/book-now'
+    username: 'User1',
+    service: 'natural hair',
+    city: 'Orlando',
+    link_url: 'https://www.vagaro.com/enhancebraidingsalon/book-now',
+    email: 'user1@gmail.com',
+    password: 'pass1234'
   },
   {
-    first_name: 'First Name 2',
-    last_name: 'Last Name 2',
-    service_id: 2,
-    city_id: 1,
-    link_url: 'https://www.vagaro.com/catalystsalon/book-now'
+    username: 'User2',
+    service_id: "Highlights",
+    city: 'Tampa',
+    link_url: 'https://www.vagaro.com/catalystsalon/book-now',
+    email: 'user2@gmail.com',
+    password: 'pass1234'
   },  
   {
-    first_name: 'First Name 3',
-    last_name: 'Last Name 3',    
-    service_id: 2,
-    city_id: 2,
-    link_url: 'https://www.vagaro.com/ubucolorsalon/book-now'
+    username: 'User3',  
+    service: 'color specialist',
+    city: 'West Palm Beach',
+    link_url: 'https://www.vagaro.com/ubucolorsalon/book-now',
+    email: 'user3@gmail.com',
+    password: 'pass1234'
   },  
   {
-    first_name: 'First Name 4',
-    last_name: 'Last Name 4',    
-    service_id: 3,
-    city_id: 2,
-    link_url: 'https://www.vagaro.com/thelookbyregina/book-now'
+    username: 'User4',    
+    service: 'haircut',
+    city: 'Miami',
+    link_url: 'https://www.vagaro.com/thelookbyregina/book-now',
+    email: 'user4@gmail.com',
+    password: 'pass1234'
   },  
   {
-    first_name: 'First Name 5',
-    last_name: 'Last Name 5',    
-    service_id: 4,
-    city_id: 3,
-    link_url: 'https://www.vagaro.com/beyoutiful342/book-now'
+    username: 'User5',   
+    service: 'formal',
+    city: 'Jacksonville',
+    link_url: 'https://www.vagaro.com/beyoutiful342/book-now',
+    email: 'user5@gmail.com',
+    password: 'pass1234'
   }
 ];
 

@@ -11,10 +11,6 @@ Post.init (
             primaryKey: true,
             autoIncrement: true
         },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         post_text: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -25,7 +21,7 @@ Post.init (
         stylist_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'user',
+                model: 'stylist',
                 key: 'id'
             }
         }

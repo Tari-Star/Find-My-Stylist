@@ -17,31 +17,17 @@ Stylist.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    first_name: {
-      type: DataTypes.STRING,
-      allownull: false,
-    },
-    last_name: {
-      type: DataTypes.STRING,
-      allownull: false,
-    },
     username:{
       type: DataTypes.STRING,
       allownull:false
   },
-    service_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "service",
-        key: "id",
-      },
+    service: {
+      type: DataTypes.STRING,
+      allownull:false
     },
-    city_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "city",
-        key: "id",
-      },
+    city: {
+      type: DataTypes.STRING,
+      allownull:false
     },
     link_url: {
       type: DataTypes.STRING,

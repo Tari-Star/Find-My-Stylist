@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
 
-const { Post, User, Stylist, Comment, Service, City } = require("../models");
+const { Post, User, Stylist, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
 // A route to render the dashboard page, only for logged in user
@@ -11,7 +11,7 @@ router.get("/", withAuth, (req, res) => {
     where: {
       stylist_id: req.session.stylist_id,
     },
-    attributes: ["id", "post_text", "title", "created_at"],
+    attributes: ["id", "post_text","created_at"],
     include: [
       {
         model: Comment,
@@ -23,15 +23,7 @@ router.get("/", withAuth, (req, res) => {
       },
       {
         model: Stylist,
-        attributes: ["username", "service_id", "city_id"],
-        include: {
-          model: Service,
-          attributes: ["title"],
-        },
-        include: {
-          model: City,
-          attributes: ["name"],
-        },
+        attributes: ["username", "city", "service"]
       },
     ],
   })
@@ -51,7 +43,7 @@ router.get("/edit/:id", withAuth, (req, res) => {
     where: {
       id: req.params.id,
     },
-    attributes: ["id", "post_text", "title", "created_at"],
+    attributes: ["id", "post_text","created_at"],
     include: [
       {
         model: Comment,
@@ -63,15 +55,7 @@ router.get("/edit/:id", withAuth, (req, res) => {
       },
       {
         model: Stylist,
-        attributes: ["username", "service_id", "city_id"],
-        include: {
-          model: Service,
-          attributes: ["title"],
-        },
-        include: {
-          model: City,
-          attributes: ["name"],
-        },
+        attributes: ["username", "city", "service"]
       },
     ],
   })

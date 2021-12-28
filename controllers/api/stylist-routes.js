@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Stylist, Service, City, Post } = require("../../models");
+const { Stylist, Post, Comment } = require("../../models");
 
 const session = require('express-session');
 const withAuth = require('../../utils/auth');
@@ -27,14 +27,6 @@ router.get("/:id", (req, res) => {
     },
     include: [
       {
-        model: City,
-        attributes: ['id', 'name']
-      },
-      {
-        model: Service,
-        attributes: ['id', 'title']
-      },
-      {
         model: Post,
         attributes: ['post_text']
       }
@@ -57,8 +49,8 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   Stylist.create({
     username: req.body.username,
-    service_id: req.body.service_id,
-    city_id: req.body.city_id,
+    service: req.body.service,
+    city: req.body.city,
     link_url: req.body.link_url,
     email: req.body.email,
     password: req.body.password,

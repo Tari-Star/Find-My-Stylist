@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Stylist, Service, City, Comment } = require('../models');
+const { Post, User, Stylist, Comment } = require('../models');
 
 //Render the home page
 router.get('/', (req, res) => {
     Post.findAll({
-      attributes: ["id", "post_text", "title", "created_at"],
+      attributes: ["id", "post_text","created_at"],
       include: [
         {
           model: Comment,
@@ -17,15 +17,7 @@ router.get('/', (req, res) => {
         },
         {
           model: Stylist,
-          attributes: ["username", "service_id", "city_id"],
-          include: {
-            model: Service,
-            attributes: ["title"],
-          },
-          include: {
-            model: City,
-            attributes: ["name"],
-          },
+          attributes: ["username","city", "service"]
         },
       ],
     })
@@ -47,7 +39,7 @@ router.get('/post/:id', (req, res) => {
         where: {
             id: req.params.id
         },
-        attributes: ["id", "post_text", "title", "created_at"],
+        attributes: ["id", "post_text","created_at"],
         include: [
           {
             model: Comment,
@@ -59,15 +51,7 @@ router.get('/post/:id', (req, res) => {
           },
           {
             model: Stylist,
-            attributes: ["username", "service_id", "city_id"],
-            include: {
-              model: Service,
-              attributes: ["title"],
-            },
-            include: {
-              model: City,
-              attributes: ["name"],
-            },
+            attributes: ["username","city", "service"]
           },
         ],
     })
