@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/Tari-Star/Find-My-Stylist.git"
   },
-  "author": "",
+  "author": "Tari-Star",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Tari-Star/Find-My-Stylist/issues"
@@ -29,5 +29,6 @@
     "node": "^14.18.1",
     "sequelize": "^6.12.0-beta.1"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {}
 }
