@@ -3,34 +3,46 @@ const sequelize = require('../config/connection');
 const { Post, User, Stylist, Comment } = require('../models');
 
 //Render the home page
+ router.get('/', (req, res) => {
+     Post.findAll({
+       attributes: ["id", "post_text","created_at"],
+       include: [
+         {
+           model: Comment,
+           attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+           include: {
+             model: User,
+             attributes: ["username"],
+           },
+         },
+     
+       ],
+     })
+     .then(dbPostData => {
+         const posts = dbPostData.map(post => post.get({ plain: true }));
+         res.render('homepage', {
+             posts
+         });
+     })
+     .catch(err => {
+         console.log(err);
+         res.status(500).json(err);
+     });
+ });
 router.get('/', (req, res) => {
-    Post.findAll({
-      attributes: ["id", "post_text","created_at"],
-      include: [
-        {
-          model: Comment,
-          attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-          include: {
-            model: User,
-            attributes: ["username"],
-          },
-        },
-        {
-          model: Stylist,
-          attributes: ["username","city", "service"]
-        },
-      ],
-    })
-    .then(dbPostData => {
-        const posts = dbPostData.map(post => post.get({ plain: true }));
-        res.render('homepage', {
-            posts
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
+  Stylist.findAll({
+    attributes: ["id", "city","service", "link_url"]
+  })
+  .then(dbStylistData => {
+    const stylists = dbStylistData.map(stylist => stylist.get({ plain: true }));
+    res.render('homepage', {
+      stylists
     });
+  })
+  .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+  });
 });
 
 // Render single post page

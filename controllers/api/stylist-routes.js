@@ -24,13 +24,7 @@ router.get("/:id", (req, res) => {
     attributes: { exclude: ["password"] },
     where: {
       id: req.params.id,
-    },
-    include: [
-      {
-        model: Post,
-        attributes: ['post_text']
-      }
-    ]
+    }
   })
     .then((dbStylistData) => {
       if (!dbStylistData) {
@@ -114,9 +108,10 @@ router.post('/logout', withAuth, (req, res) => {
   }
 });
 // update stylist info
-router.put("/:id", (req, res) => {
+router.put("/:id",withAuth, (req, res) => {
   // pass in req.body instead to only update what's passed through
   Stylist.update(req.body, {
+    individualHooks: true,
     where: {
       id: req.params.id,
     },

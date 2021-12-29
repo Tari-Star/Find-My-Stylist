@@ -1,7 +1,16 @@
-<ul class="post-list">
-    {{#each posts as |post|}}
-    <li>
-        {{> post-info post}}
-    </li>
+<div class="row">
+{{!-- <div class="column">
+    {{#each stylists as |stylist|}}
+    <div class="card">
+        {{> stylist-info stylist}}
+    </div>
       {{/each}}
-</ul>
+</div> --}}
+<div class="column">
+    {{#each posts as |post|}}
+    <div class="card">
+        {{> post-info post}}
+    </div>
+      {{/each}}
+</div> 
+</div>

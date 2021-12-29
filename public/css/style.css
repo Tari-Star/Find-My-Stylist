@@ -64,14 +64,11 @@ button {
 button:hover {
   background-color: violet;
 }
-.post  {
-  box-shadow: 0 0 10px rgba( 0, 0, 0, 0.5);
-  background: #a57b51; 
-} 
-.post-list {
+
+/* .post-list {
   margin: 0;
   padding: 0;
-}
+} */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* this adds the "card" effect */
   padding: 20px;
@@ -85,11 +82,11 @@ button:hover {
 }
 .row {margin: 0 -5px;}
 
-.row:after {
+/* .row:after {
   content: "";
   display: table;
   clear: both;
-}
+} */
 @media screen and (max-width: 600px) {
   .column {
     width: 100%;
@@ -97,12 +94,19 @@ button:hover {
     margin-bottom: 20px;
   }
 }
+.post,
+.login-form,
+.signup-form {
+  box-shadow: 0 0 10px rgba( 0, 0, 0, 0.5);
+  background: #a57b51; 
+}
 main {
   background-color: rgb(80, 45, 32);
   flex: 1;
   padding: 2% 4%;
   background: #CB6CE6;
 }
+
 textarea, input {
   padding: .5%;
   border-radius: 5px;
