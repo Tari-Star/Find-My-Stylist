@@ -5,16 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find My Stylist</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
   <div class="wrapper">
     <header>
-      <h1>
-        <a href="/">Find My Stylist</a>
-      </h1>
     <nav>
+      
         {{#if loggedIn}}
         <span><a href="/">Home</a></span>
         <a href="/dashboard">List Your Services</a>
@@ -24,8 +22,11 @@
             <a href="/dashboard">List Your Services</a>
             <a href="/login">Login/Signup</a>
         </button>
+        <img src="/images/one.jpg"/>
         {{/if}}
+         
       </nav>
+     
     </header>
     <main>
       {{{ body }}}
